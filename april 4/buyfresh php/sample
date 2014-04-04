@@ -1,0 +1,70 @@
+class GetProductDetails extends AsyncTask<String, String, String> {
+ 
+        /**
+         * Before starting background thread Show Progress Dialog
+         * */
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(EditProductActivity.this);
+            pDialog.setMessage("Loading product details. Please wait...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(true);
+            pDialog.show();
+        }
+ 
+        /**
+         * Getting product details in background thread
+         * */
+        protected String doInBackground(String... params) {
+ 
+            // updating UI from Background Thread
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    // Check for success tag
+                    int success;
+                    try {
+                        // Building Parameters
+                        List<NameValuePair> params = new ArrayList<NameValuePair>();
+                        params.add(new BasicNameValuePair("pid", pid));
+ 
+                        // getting product details by making HTTP request
+                        // Note that product details url will use GET request
+                        JSONObject json = jsonParser.makeHttpRequest(
+                                url_product_detials, "GET", params);
+ 
+                        // check your log for json response
+                        Log.d("Single Product Details", json.toString());
+ 
+                        // json success tag
+                        success = json.getInt(TAG_SUCCESS);
+                        if (success == 1) {
+                            // successfully received product details
+                            JSONArray productObj = json
+                                    .getJSONArray(TAG_PRODUCT); // JSON Array
+ 
+                            // get first product object from JSON Array
+                            JSONObject product = productObj.getJSONObject(0);
+ 
+                            // product with this pid found
+                            // Edit Text
+                            txtName = (EditText) findViewById(R.id.inputName);
+                            txtPrice = (EditText) findViewById(R.id.inputPrice);
+                            txtDesc = (EditText) findViewById(R.id.inputDesc);
+ 
+                            // display product data in EditText
+                            txtName.setText(product.getString(TAG_NAME));
+                            txtPrice.setText(product.getString(TAG_PRICE));
+                            txtDesc.setText(product.getString(TAG_DESCRIPTION));
+ 
+                        }else{
+                            // product with pid not found
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+ 
+            return null;
+        }
