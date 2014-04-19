@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">BuyFresh</string>
+     <string name="action_contactus">Contact us</string>
+    <string name="action_pricelist">Pricelist</string>
+    <string name="action_aboutus">About us</string>
+    <string name="action_policy">Policy</string>
+    <string name="GrandTotal">Total</string>
+      <string name="Quality_prompt">Choose Quality</string>
+
+    <string-array name="Array_Quality">
+        <item>.5 Kg</item>
+        <item>1 Kg</item>
+        <item>2 Kg</item>
+        <item>3 Kg</item>
+        <item>4 Kg</item>
+        <item>5 Kg</item>
+    </string-array>
+    
+ 
+</resources>
